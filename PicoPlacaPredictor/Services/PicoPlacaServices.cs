@@ -8,23 +8,11 @@ namespace PicoPlacaPredictor.Services
 {
     public class PicoPlacaServices
     {
-        string trueMessage = "Don't worry, you can road today";
-        string falseMessage = "Sorry :(. You're going to take a bus";
-
         public PicoPlacaResponseModel CanRoad(PicoPlacaModel picoPlacaAux)
         {
             PicoPlacaResponseModel response = new PicoPlacaResponseModel();
 
-            //We verify if the day is saturday or sunday, there's no pico y placa on weekends
-            //6 it's saturday and 0 it's sunday
-            if(DayOfWeek(picoPlacaAux.Date)==6 || DayOfWeek(picoPlacaAux.Date) == 0)
-            {
-                response.CanRoad = true;
-                response.Message = trueMessage;
-        
-                return response;
-            }
-            else
+            if(DayOfWeek(picoPlacaAux.Date)==0 || DayOfWeek(picoPlacaAux.Date) == 6)
             {
 
             }
@@ -85,24 +73,6 @@ namespace PicoPlacaPredictor.Services
             {
                 return false;
             }
-        }
-
-        /*public int PlateNumberToDay(int plateNumberAux)
-        {
-            //this function converts the plate number into a day of the week (from: monday to:friday)
-
-        }*/
-
-        public int LastPlateDigit(int plateNumberAux)
-        {
-            //this function extracts the last digit of the plate
-            int thousands = plateNumberAux / 1000;
-            int plateNumber3Digits = plateNumberAux - (thousands * 1000);
-            int hundreds = plateNumber3Digits / 100;
-            int plateNumber2Digits = plateNumber3Digits - (hundreds * 100);
-            int tens = plateNumber2Digits / 10;
-
-            return plateNumber2Digits - (tens * 10);
         }
     }
 }
