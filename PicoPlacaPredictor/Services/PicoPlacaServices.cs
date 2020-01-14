@@ -89,7 +89,7 @@ namespace PicoPlacaPredictor.Services
         public int PlateNumberToDay(int plateNumberAux)
         {
             //this function converts the plate number into a day of the week (from: monday to:friday)
-            int lastDigit = PlateNumberToDay(plateNumberAux);
+            int lastDigit = LastPlateDigit(plateNumberAux);
 
             switch (lastDigit)
             {
