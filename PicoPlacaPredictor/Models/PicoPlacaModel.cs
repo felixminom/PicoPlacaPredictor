@@ -14,7 +14,7 @@ namespace PicoPlacaPredictor.Models
 
     public class PicoPlacaResponseModel
     {
-        public bool Status { get; set; }
+        public bool CanRoad { get; set; }
         public string Message { get; set; }
     }
 }
