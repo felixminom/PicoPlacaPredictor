@@ -8,7 +8,7 @@ namespace PicoPlacaPredictor.Services
 {
     public class PicoPlacaServices
     {
-        public static PicoPlacaResponseModel CanRoad(PicoPlacaModel picoPlacaAux)
+        public PicoPlacaResponseModel CanRoad(PicoPlacaModel picoPlacaAux)
         {
             PicoPlacaResponseModel response = new PicoPlacaResponseModel();
 
@@ -20,7 +20,7 @@ namespace PicoPlacaPredictor.Services
             return response;
         }
 
-        private static int DayOfWeek(string dateAux)
+        public int DayOfWeek(string dateAux)
         {
             string[] dateAsString = dateAux.Split('/');
             int year = Convert.ToInt32(dateAsString[0]);
@@ -36,15 +36,15 @@ namespace PicoPlacaPredictor.Services
         }
 
 
-        private static bool VerifyHour(string hour)
+        public bool VerifyHour(string hour)
         {
             //we separate the hour recivied as string into hours and minutes and convert into integers
             int hourAux = Convert.ToInt32(hour.Split(':')[0]);
             int minutesAux = Convert.ToInt32(hour.Split(':')[1]);
 
             //We validate the hours 
-       
-            if((hourAux>=7 && hourAux<=9) || (hourAux >=16 && hourAux <=19))
+
+            if ((hourAux >= 7 && hourAux <= 9) || (hourAux >= 16 && hourAux <= 19))
             {
                 switch (hourAux)
                 {
@@ -73,9 +73,6 @@ namespace PicoPlacaPredictor.Services
             {
                 return false;
             }
-
-            
-            
         }
     }
 }
