@@ -8,28 +8,41 @@ namespace PicoPlacaPredictor.Services
 {
     public class PicoPlacaServices
     {
-        string trueMessage = "Don't worry, you can road today";
-        string falseMessage = "Sorry :(. You're going to take a bus";
 
         public PicoPlacaResponseModel CanRoad(PicoPlacaModel picoPlacaAux)
         {
-            PicoPlacaResponseModel response = new PicoPlacaResponseModel();
-
             //We verify if the day is saturday or sunday, there's no pico y placa on weekends
             //6 it's saturday and 0 it's sunday
-            if(DayOfWeek(picoPlacaAux.Date)==6 || DayOfWeek(picoPlacaAux.Date) == 0)
+            int Day = DayOfWeek(picoPlacaAux.Date);
+
+            if (Day == 6 || Day == 0)
             {
-                response.CanRoad = true;
-                response.Message = trueMessage;
-        
-                return response;
+                return GetResponse(true);
             }
             else
             {
+                //We get the day when the plate number it's on pico y placa
+                int PlateDay = PlateNumberToDay(picoPlacaAux.PlateNumber);
 
+                if( Day == PlateDay)
+                {
+                    //Finally we verify that the time received it's wheter or not in pico y placa.
+                    if(VerifyHour(picoPlacaAux.Time))
+                    {
+                        return GetResponse(false);
+                    }
+                    else
+                    {
+                        return GetResponse(true);
+                    }
+
+                }
+                else
+                {
+                    return GetResponse(true);
+                }
             }
 
-            return response;
         }
 
         public int DayOfWeek(string dateAux)
@@ -128,6 +141,25 @@ namespace PicoPlacaPredictor.Services
             int tens = plateNumber2Digits / 10;
 
             return plateNumber2Digits - (tens * 10);
+        }
+
+        public PicoPlacaResponseModel GetResponse(bool CanRoad)
+        {
+            PicoPlacaResponseModel response = new PicoPlacaResponseModel();
+
+            if (CanRoad)
+            {
+                response.CanRoad = true; 
+                response.Message = "Don't worry, you can road today";
+                return response;
+            }
+            else
+            {
+                response.CanRoad = true;
+                response.Message = "Sorry :(. You're going to take a bus today";
+                return response;
+
+            }
         }
     }
 }
