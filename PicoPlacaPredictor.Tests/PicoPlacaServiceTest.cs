@@ -44,7 +44,7 @@ namespace PicoPlacaPredictor.Tests
 
         }
 
-        //Verify that Pico y placa hour is active 
+        //Verify that Pico y placa hour is inactive 
         [TestMethod]
         public void VerifyHour_PicoPlacaHourFalse_IsFalse()
         {
@@ -63,6 +63,38 @@ namespace PicoPlacaPredictor.Tests
 
 
         //Verify that the plate number its converted to day properly
+        //When we test all days we verify that LastPlateDigit() function is working properly in all cases
+
+        [TestMethod]
+        public void PlateNumberToDay_PicoPlacaPlateMonday_IsMonday()
+        {
+            var service = new PicoPlacaServices();
+            PicoPlacaModel picoPlaca = new PicoPlacaModel();
+            //we set a plate that has pico y placa on Wednesday
+            picoPlaca.PlateNumber = 3211;
+
+            int expected = 1;
+
+            int result = service.PlateNumberToDay(picoPlaca.PlateNumber);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void PlateNumberToDay_PicoPlacaPlateTuesday_IsTuesday()
+        {
+            var service = new PicoPlacaServices();
+            PicoPlacaModel picoPlaca = new PicoPlacaModel();
+            //we set a plate that has pico y placa on Wednesday
+            picoPlaca.PlateNumber = 3213;
+
+            int expected = 2;
+
+            int result = service.PlateNumberToDay(picoPlaca.PlateNumber);
+
+            Assert.AreEqual(expected, result);
+        }
+
         [TestMethod]
         public void PlateNumberToDay_PicoPlacaPlateWednesday_IsWednesday()
         {
@@ -72,6 +104,36 @@ namespace PicoPlacaPredictor.Tests
             picoPlaca.PlateNumber = 3215;
 
             int expected = 3;
+
+            int result = service.PlateNumberToDay(picoPlaca.PlateNumber);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void PlateNumberToDay_PicoPlacaPlateThursday_IsThursday()
+        {
+            var service = new PicoPlacaServices();
+            PicoPlacaModel picoPlaca = new PicoPlacaModel();
+            //we set a plate that has pico y placa on Wednesday
+            picoPlaca.PlateNumber = 3218;
+
+            int expected = 4;
+
+            int result = service.PlateNumberToDay(picoPlaca.PlateNumber);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void PlateNumberToDay_PicoPlacaPlateFriday_IsFriday()
+        {
+            var service = new PicoPlacaServices();
+            PicoPlacaModel picoPlaca = new PicoPlacaModel();
+            //we set a plate that has pico y placa on Wednesday
+            picoPlaca.PlateNumber = 3210;
+
+            int expected = 5;
 
             int result = service.PlateNumberToDay(picoPlaca.PlateNumber);
 
@@ -92,6 +154,71 @@ namespace PicoPlacaPredictor.Tests
             int result = service.LastPlateDigit(picoPlaca.PlateNumber);
 
             Assert.AreEqual(expected, result);
+
+        }
+
+        //Verify that the response it's true when passed true
+        [TestMethod]
+        public void GetResponse_True_IsTrue()
+        {
+            var service = new PicoPlacaServices();
+            PicoPlacaResponseModel expected = new PicoPlacaResponseModel();
+            expected.CanRoad = true;
+
+            PicoPlacaResponseModel result = service.GetResponse(true);
+        
+            Assert.AreEqual(expected.CanRoad,result.CanRoad);
+        }
+
+        //Verify that the response it's false when passed false
+        [TestMethod]
+        public void GetResponse_False_IsFalse()
+        {
+            var service = new PicoPlacaServices();
+            PicoPlacaResponseModel expected = new PicoPlacaResponseModel();
+            expected.CanRoad = false;
+
+            PicoPlacaResponseModel result = service.GetResponse(false);
+
+            Assert.AreEqual(expected.CanRoad, result.CanRoad);
+        }
+
+        //FINALLY we test CanRoad() function 
+        [TestMethod]
+        public void CanRoad_PicoPlacaFalse_IsFalse()
+        {
+            var service = new PicoPlacaServices();
+
+            PicoPlacaModel picoPlaca = new PicoPlacaModel();
+            picoPlaca.PlateNumber = 1233;
+            picoPlaca.Date = "2020/01/14";
+            picoPlaca.Time = "8:20";
+
+            PicoPlacaResponseModel expected = new PicoPlacaResponseModel();
+            expected.CanRoad = false;
+
+            PicoPlacaResponseModel response = service.CanRoad(picoPlaca);
+
+            Assert.AreEqual(expected.CanRoad, response.CanRoad);
+            
+        }
+
+        [TestMethod]
+        public void CanRoad_PicoPlacaTrue_IsTrue()
+        {
+            var service = new PicoPlacaServices();
+
+            PicoPlacaModel picoPlaca = new PicoPlacaModel();
+            picoPlaca.PlateNumber = 1233;
+            picoPlaca.Date = "2020/01/14";
+            picoPlaca.Time = "10:20";
+
+            PicoPlacaResponseModel expected = new PicoPlacaResponseModel();
+            expected.CanRoad = true;
+
+            PicoPlacaResponseModel response = service.CanRoad(picoPlaca);
+
+            Assert.AreEqual(expected.CanRoad, response.CanRoad);
 
         }
 

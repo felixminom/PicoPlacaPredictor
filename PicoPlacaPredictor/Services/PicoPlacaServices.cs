@@ -155,7 +155,7 @@ namespace PicoPlacaPredictor.Services
             }
             else
             {
-                response.CanRoad = true;
+                response.CanRoad = false;
                 response.Message = "Sorry :(. You're going to take a bus today";
                 return response;
 
