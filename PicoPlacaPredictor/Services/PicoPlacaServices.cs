@@ -8,7 +8,6 @@ namespace PicoPlacaPredictor.Services
 {
     public class PicoPlacaServices
     {
-
         public PicoPlacaResponseModel CanRoad(PicoPlacaModel picoPlacaAux)
         {
             //We verify if the day is saturday or sunday, there's no pico y placa on weekends
@@ -150,7 +149,7 @@ namespace PicoPlacaPredictor.Services
             if (CanRoad)
             {
                 response.CanRoad = true; 
-                response.Message = "Don't worry, you can road today";
+                response.Message = "Don't worry, you can be on the road today";
                 return response;
             }
             else

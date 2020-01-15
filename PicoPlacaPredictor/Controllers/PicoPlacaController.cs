@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using PicoPlacaPredictor.Models;
+using PicoPlacaPredictor.Services;
 
 namespace PicoPlacaPredictor.Controllers
 {
@@ -12,9 +14,11 @@ namespace PicoPlacaPredictor.Controllers
     {
         [HttpPost]
         [Route("CanRoad")]
-        public IHttpActionResult CanRoad()
+        public IHttpActionResult CanRoad(PicoPlacaModel picoPlaca)
         {
-            return Ok(true);
+            var service = new PicoPlacaServices();
+
+            return Ok(service.CanRoad(picoPlaca));
         }
         
     }
