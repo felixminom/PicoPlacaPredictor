@@ -13,18 +13,18 @@ namespace PicoPlacaPredictor.Services
         {
             //We verify if the day is saturday or sunday, there's no pico y placa on weekends
             //6 it's saturday and 0 it's sunday
-            int Day = DayOfWeek(picoPlacaAux.Date);
+            int day = DayOfWeek(picoPlacaAux.Date);
 
-            if (Day == 6 || Day == 0)
+            if (day == 6 || day == 0)
             {
                 return GetResponse(true);
             }
             else
             {
                 //We get the day when the plate number it's on pico y placa
-                int PlateDay = PlateNumberToDay(picoPlacaAux.PlateNumber);
+                int plateDay = PlateNumberToDay(picoPlacaAux.PlateNumber);
 
-                if( Day == PlateDay)
+                if( day == plateDay)
                 {
                     //Finally we verify that the time received it's wheter or not in pico y placa.
                     if(VerifyHour(picoPlacaAux.Time))
